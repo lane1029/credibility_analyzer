@@ -283,7 +283,6 @@ def add_articles(collection, new_titles, base_url, content_type):
             content['text_content'] = text_content
 
             collection.insert_one(content)
-        break
     return len(new_titles)
 
 def fetch_and_update_data(main_url):
