@@ -6,8 +6,10 @@ load_dotenv()
 
 class Config:
     # MongoDB URI, fallbacks to a default if not specified
-    MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-    DB_NAME = os.getenv("DB_NAME", "mydatabase")  # default database name
+    MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://delaneym1996:vcahWpldBEsSSPmI@credanalyzer.pceft.mongodb.net/?retryWrites=true&w=majority&appName=CredAnalyzer")
+    DB_NAME = os.getenv("DB_NAME", "CredAnalyzer")  # default database name
+    ARTICLE_COLLECTION_NAME = os.getenv("COLLECTION_NAME", "articles")  # default collection name
+    METADATA_COLLECTION_NAME = os.getenv("METADATA_COLLECTION_NAME", "metadata")  # default
     PORT = int(os.getenv("PORT", 5000))  # Port for web server if needed
     MAIN_URL = "https://usafacts.org/articles/category/health"
     BASE_URL = "https://usafacts.org/"
