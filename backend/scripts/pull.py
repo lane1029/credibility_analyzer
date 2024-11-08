@@ -283,6 +283,7 @@ def add_articles(collection, new_titles, base_url, content_type):
             content['text_content'] = text_content
 
             collection.insert_one(content)
+        break
     return len(new_titles)
 
 def fetch_and_update_data(main_url):
@@ -324,13 +325,13 @@ def get_metadata_collection(collection_name, db):
 
     return collection
 
-def update_metadata(fetch_successful, updated_titels, num_updated, new_titles, num_added):
+def update_metadata(fetch_successful, updated_titles, num_updated, new_titles, num_added):
     db = client[config.DB_NAME]
     metadata_collection = get_metadata_collection(config.METADATA_COLLECTION_NAME, db)
 
     metadata = {
         "fetch_successful": fetch_successful,
-        "updated_titles": updated_titels,
+        "updated_titles": updated_titles,
         "count_updated_titles": num_updated,
         "new_titles": new_titles,
         "count_new_titles": num_added,
@@ -348,5 +349,6 @@ if __name__ == "__main__":
     os.makedirs(output_folder, exist_ok=True)
 
     # Fetch the HTML content of the main page and all subpages
-    fetch_successful, updated_titels, num_updated, new_titles, num_added = fetch_and_update_data(url)
+    fetch_successful, updated_titles, num_updated, new_titles, num_added = fetch_and_update_data(url)
+    update_metadata(fetch_successful, updated_titles, num_updated, new_titles, num_added)
         
