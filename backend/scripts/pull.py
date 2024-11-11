@@ -162,6 +162,7 @@ def extract_article_content(article_soup):
     paragraphs = article_soup.find_all('div', class_='rich-text')
     text_content = " ".join([p.get_text() for p in paragraphs])
     text_content = " ".join(text_content.split()) # Remove extra whitespaces and newlines
+    text_content = text_content.replace("”", '"').replace("“", '"') # Replace special characters
     return text_content
 
 def get_article_collection(collection_name, db):

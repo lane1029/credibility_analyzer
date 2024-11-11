@@ -7,7 +7,7 @@ load_dotenv()
 class Config:
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # OpenAI API key
     # MongoDB URI, fallbacks to a default if not specified
-    MONGO_URI = os.getenv("MONGO_URI")
+    MONGO_URI = os.getenv("MONGODB_URI")
     DB_NAME = os.getenv("DB_NAME", "CredAnalyzer")  # default database name
     ARTICLE_COLLECTION_NAME = os.getenv("COLLECTION_NAME", "articles")  # default collection name
     METADATA_COLLECTION_NAME = os.getenv("METADATA_COLLECTION_NAME", "metadata")  # default
