@@ -43,6 +43,7 @@ def add_file_to_vector_store(file_content, vector_store_id):
     """
     file_bytes = json.dumps({
             "article_id": file_content["article_id"],
+            "url": file_content["url"],
             "text_content": file_content["text_content"]
         }).encode('utf-8')
     file_obj = io.BytesIO(file_bytes)
