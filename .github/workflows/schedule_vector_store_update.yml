@@ -1,4 +1,4 @@
-name: Scheduled Web Scraping
+name: Scheduled Vector Store Update
 
 on:
   schedule:
