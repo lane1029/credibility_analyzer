@@ -33,8 +33,8 @@ def update_vector_stores():
     for content_type in unique_content_types:
         if content_type not in vector_store_dict.keys():
             print(f"Creating vector store for {content_type}")
-            # vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime.now().isoformat()})
-            vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 1).isoformat()})            
+            # vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime.now().isoformat(), "total_files": 0})
+            vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 10).isoformat(), "total_files": 0})
 
         else:
             print(f"Updating vector store for {content_type}")
@@ -45,22 +45,32 @@ def update_vector_stores():
             "content_type": content_type,
             "date_retrieved": {"$gt": vs_last_update}
         }).to_list()
-        for file in new_files:
-            file_bytes = json.dumps({
-                    "article_id": file["article_id"],
-                    "text_content": file["text_content"]
-                }).encode('utf-8')
-            file_obj = io.BytesIO(file_bytes)
-            file_obj.name = f"{file["article_id"]}.json"
-            uploaded_file = openai_client.files.create(
-                file=file_obj,
-                purpose="assistants"
+        if len(new_files) == 0:
+            print(f"No new files found")
+        else:
+            vs_total_files = vector_store.metadata.get("total_files")
+            vs_total_files += len(new_files)
+            print(f"Updating {len(new_files)} files")
+            for file in new_files:
+                file_bytes = json.dumps({
+                        "article_id": file["article_id"],
+                        "text_content": file["text_content"]
+                    }).encode('utf-8')
+                file_obj = io.BytesIO(file_bytes)
+                file_obj.name = f"{file["article_id"]}.json"
+                uploaded_file = openai_client.files.create(
+                    file=file_obj,
+                    purpose="assistants"
+                    )
+                vector_store_file = openai_client.beta.vector_stores.files.create(
+                    vector_store_id=vector_store.id,
+                    file_id=uploaded_file.id
+                    )
+                print(vector_store_file)
+            vector_store = openai_client.beta.vector_stores.update(
+                    vector_store_id=vector_store.id,
+                    metadata={"last_updated": datetime.now().isoformat(), "total_files": vs_total_files}
                 )
-            vector_store_file = openai_client.beta.vector_stores.files.create(
-                vector_store_id=vector_store.id,
-                file_id=uploaded_file.id
-                )
-            print(vector_store_file)
         
     return True
 
