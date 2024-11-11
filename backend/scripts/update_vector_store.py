@@ -37,7 +37,7 @@ def retrieve_vector_store(content_type, vector_store_dict):
         vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 10).isoformat(), "total_files": 0})
         return vector_store
     
-def add_file_to_vector_store(file_content, vector_store):
+def add_file_to_vector_store(file_content, vector_store_id):
     """
     Add a file to a vector store
     """
@@ -52,7 +52,7 @@ def add_file_to_vector_store(file_content, vector_store):
         purpose="assistants"
         )
     vector_store_file = openai_client.beta.vector_stores.files.create(
-        vector_store_id=vector_store.id,
+        vector_store_id=vector_store_id,
         file_id=uploaded_file.id
         )
     return vector_store_file
@@ -82,8 +82,7 @@ def update_vector_stores():
             vs_total_files += len(new_files)
             print(f"Updating {len(new_files)} files")
             for file in new_files:
-                vector_store_file = add_file_to_vector_store(file, vector_store)
-                print(f"Added file {file['article_id']} to vector store {vector_store.id}")
+                vector_store_file = add_file_to_vector_store(file, vector_store.id)
             vector_store = openai_client.beta.vector_stores.update(
                     vector_store_id=vector_store.id,
                     metadata={"last_updated": datetime.now().isoformat(), "total_files": vs_total_files}
