@@ -226,6 +226,7 @@ def updated_articles(collection, common_titles, existing_article_dict, base_url)
             updated_article_count += 1
             updated_articles.append(title)
             content = {}
+            content['date_retrieved'] = datetime.now().isoformat()
             content['published_date'] = publication_info[0]
             content['published_day'] = publication_info[1]
             content['published_month'] = publication_info[2]
