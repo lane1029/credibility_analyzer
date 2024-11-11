@@ -13,7 +13,7 @@ from pymongo.server_api import ServerApi
 config = get_config()
 
 mongo_client = MongoClient(config.MONGO_URI, server_api=ServerApi('1'))
-openai_client = OpenAI()
+openai_client = OpenAI(api_key=config.OPENAI_API_KEY)
 
 def get_vector_store_id_dict():
     """
