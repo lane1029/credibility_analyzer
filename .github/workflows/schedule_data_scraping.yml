@@ -9,6 +9,9 @@ jobs:
   scrape_job:
     runs-on: ubuntu-latest  # Use a Linux runner environment
 
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
