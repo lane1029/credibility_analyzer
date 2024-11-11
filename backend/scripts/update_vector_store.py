@@ -34,7 +34,7 @@ def retrieve_vector_store(content_type, vector_store_dict):
         return vector_store
     else:
         # vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime.now().isoformat(), "total_files": 0})
-        vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 10).isoformat(), "total_files": 0})
+        vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 10).isoformat(), "total_files": "0"})
         return vector_store
     
 def add_file_to_vector_store(file_content, vector_store_id):
@@ -78,14 +78,14 @@ def update_vector_stores():
         if len(new_files) == 0:
             print(f"No new files found")
         else:
-            vs_total_files = vector_store.metadata.get("total_files")
+            vs_total_files = int(vector_store.metadata.get("total_files"))
             vs_total_files += len(new_files)
             print(f"Updating {len(new_files)} files")
             for file in new_files:
                 vector_store_file = add_file_to_vector_store(file, vector_store.id)
             vector_store = openai_client.beta.vector_stores.update(
                     vector_store_id=vector_store.id,
-                    metadata={"last_updated": datetime.now().isoformat(), "total_files": vs_total_files}
+                    metadata={"last_updated": datetime.now().isoformat(), "total_files": str(vs_total_files)}
                 )
         
     return True
