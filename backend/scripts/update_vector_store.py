@@ -15,6 +15,48 @@ config = get_config()
 mongo_client = MongoClient(config.MONGO_URI, server_api=ServerApi('1'))
 openai_client = OpenAI()
 
+def get_vector_store_id_dict():
+    """
+    Get the vector store ID for a given content type
+    """
+    vector_stores = openai_client.beta.vector_stores.list()
+    vector_store_dict = {}
+    for vs in vector_stores.data:
+        vector_store_dict[vs.name] = vs.id
+    return vector_store_dict
+
+def retrieve_vector_store(content_type, vector_store_dict):
+    """
+    Retrieve the vector store for a given content type
+    """
+    if content_type in vector_store_dict.keys():
+        vector_store = openai_client.beta.vector_stores.retrieve(vector_store_id=vector_store_dict[content_type])
+        return vector_store
+    else:
+        # vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime.now().isoformat(), "total_files": 0})
+        vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 10).isoformat(), "total_files": 0})
+        return vector_store
+    
+def add_file_to_vector_store(file_content, vector_store):
+    """
+    Add a file to a vector store
+    """
+    file_bytes = json.dumps({
+            "article_id": file_content["article_id"],
+            "text_content": file_content["text_content"]
+        }).encode('utf-8')
+    file_obj = io.BytesIO(file_bytes)
+    file_obj.name = f"{file_content["article_id"]}.json"
+    uploaded_file = openai_client.files.create(
+        file=file_obj,
+        purpose="assistants"
+        )
+    vector_store_file = openai_client.beta.vector_stores.files.create(
+        vector_store_id=vector_store.id,
+        file_id=uploaded_file.id
+        )
+    return vector_store_file
+
 def update_vector_stores():
     """
     Update the vector stores for all articles in the database
@@ -23,22 +65,10 @@ def update_vector_stores():
     db = mongo_client[config.DB_NAME]
     collection = db[config.ARTICLE_COLLECTION_NAME]
 
-    # Get a list of all unique "content_type" attributes in the collection
-    unique_content_types = collection.distinct("content_type")
-    vector_stores = openai_client.beta.vector_stores.list()
-    vector_store_dict = {}
-    for vs in vector_stores.data:
-        vector_store_dict[vs.name] = vs.id
+    vector_store_dict = get_vector_store_id_dict()
 
-    for content_type in unique_content_types:
-        if content_type not in vector_store_dict.keys():
-            print(f"Creating vector store for {content_type}")
-            # vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime.now().isoformat(), "total_files": 0})
-            vector_store = openai_client.beta.vector_stores.create(name=content_type, metadata={"last_updated": datetime(2024, 11, 10).isoformat(), "total_files": 0})
-
-        else:
-            print(f"Updating vector store for {content_type}")
-            vector_store = openai_client.beta.vector_stores.retrieve(vector_store_id=vector_store_dict[content_type])
+    for content_type in collection.distinct("content_type"):
+        vector_store = retrieve_vector_store(content_type, vector_store_dict)
         vs_last_update = vector_store.metadata.get("last_updated")
         # Get all files with the current content type and a "date_retrieved" later than the last update
         new_files = collection.find({
@@ -52,21 +82,8 @@ def update_vector_stores():
             vs_total_files += len(new_files)
             print(f"Updating {len(new_files)} files")
             for file in new_files:
-                file_bytes = json.dumps({
-                        "article_id": file["article_id"],
-                        "text_content": file["text_content"]
-                    }).encode('utf-8')
-                file_obj = io.BytesIO(file_bytes)
-                file_obj.name = f"{file["article_id"]}.json"
-                uploaded_file = openai_client.files.create(
-                    file=file_obj,
-                    purpose="assistants"
-                    )
-                vector_store_file = openai_client.beta.vector_stores.files.create(
-                    vector_store_id=vector_store.id,
-                    file_id=uploaded_file.id
-                    )
-                print(vector_store_file)
+                vector_store_file = add_file_to_vector_store(file, vector_store)
+                print(f"Added file {file['article_id']} to vector store {vector_store.id}")
             vector_store = openai_client.beta.vector_stores.update(
                     vector_store_id=vector_store.id,
                     metadata={"last_updated": datetime.now().isoformat(), "total_files": vs_total_files}
@@ -77,6 +94,6 @@ def update_vector_stores():
 if __name__ == "__main__":
     update_successful = update_vector_stores()
     if update_successful:
-        print("Vector stores updated successfully.")
+        sys.stdout.write("Vector stores updated successfully.\n")
     else:
-        print("Vector stores update failed.")
+        sys.stderr.write("Vector store update failed.\n")
