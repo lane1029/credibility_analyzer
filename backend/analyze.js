@@ -11,6 +11,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// Utility function to detect if input is a URL or text
+export async function isUrlOrText(input) {
+  const urlPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]{2,}\.)+[a-zA-Z]{2,}(\/\S*)?$/;
+  return urlPattern.test(input) ? 'URL' : 'Text';
+};
+
 export async function analyzeURL(url) {
   await client.connect();
   const db = client.db('credibility_analyzer');
