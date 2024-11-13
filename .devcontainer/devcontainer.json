@@ -1,0 +1,11 @@
+{
+    "name": "My Codespace",
+    "forwardPorts": [5000],
+    "portsAttributes": {
+      "5000": {
+        "label": "API Server",
+        "visibility": "public"
+      }
+    }
+  }
+  
