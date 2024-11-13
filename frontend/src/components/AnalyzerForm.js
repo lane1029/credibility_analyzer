@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function AnalyzerForm() {
-  const [url, setUrl] = useState('');
+  const [userInput, setUserInput] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -12,14 +12,14 @@ function AnalyzerForm() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ userInput }),
       });
 
       const data = await response.json();
       setAnalysisResult(data.result);
     } catch (error) {
-      console.error('Error analyzing URL:', error);
-      setAnalysisResult('An error occurred while analyzing the URL.');
+      console.error('Error analyzing User Input:', error);
+      setAnalysisResult('An error occurred while analyzing the user input.');
     }
     setLoading(false);
   };
@@ -28,9 +28,9 @@ function AnalyzerForm() {
     <div>
       <input
         type="text"
-        placeholder="Enter URL"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        placeholder="Enter URL or Text Block"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
       />
       <button onClick={handleAnalyze} disabled={loading}>
         {loading ? 'Analyzing...' : 'Analyze'}

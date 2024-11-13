@@ -26,8 +26,9 @@ app.use((req, res, next) => {
 app.use(json());
 
 app.post('/api/analyze', async (req, res) => {
+  console.log("Request body URL:", req.body.userInput); // Debug log
   const { userInput } = req.body;
-  console.log("Request body URL:", url); // Debug log
+  console.log("Request body URL:", userInput); // Debug log
 
   if (!userInput) {
     console.log("No user input provided in request body"); // Debug log
@@ -36,18 +37,18 @@ app.post('/api/analyze', async (req, res) => {
 
   try {
     const inputType = await isUrlOrText(userInput);
-    console.log("Analysis result:", analysisResult); // Debug log
+    console.log("Analysis result:", inputType); // Debug log
 
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
       console.log("Analysis result:", textContent); // Debug log
 
-      return res.json({ result: analysisResult });
+      return res.json({ result: textContent });
     }
     else {
-      console.log("Analysis result:", analysisResult); // Debug log
+      console.log("Analysis result:", userInput); // Debug log
 
-      return res.json({ result: analysisResult });
+      return res.json({ result: userInput });
     }
   } catch (error) {
     console.error('Error analyzing URL:', error);
