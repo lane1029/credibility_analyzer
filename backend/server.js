@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 import express, { json } from 'express';
 import cors from 'cors';
 import { isUrlOrText, analyzeURL } from './analyze.js';
-import { getAssistantList, retrieveAssistant } from './assistants.js';
+import { getAssistants } from './assistants.js';
 import { scrapeURL } from './scrape.js';
+import {classifyText} from './classify.js';
 // Load environment variables
 dotenv.config();
 
@@ -26,9 +27,7 @@ app.use((req, res, next) => {
 app.use(json());
 
 app.post('/api/analyze', async (req, res) => {
-  console.log("Request body URL:", req.body.userInput); // Debug log
   const { userInput } = req.body;
-  console.log("Request body URL:", userInput); // Debug log
 
   if (!userInput) {
     console.log("No user input provided in request body"); // Debug log
@@ -37,43 +36,25 @@ app.post('/api/analyze', async (req, res) => {
 
   try {
     const inputType = await isUrlOrText(userInput);
-    console.log("Analysis result:", inputType); // Debug log
 
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
-      console.log("Analysis result:", textContent); // Debug log
+      const classification = await classifyText(textContent);
 
-      return res.json({ result: textContent });
+
+      return res.json({ result: classification });
     }
     else {
       console.log("Analysis result:", userInput); // Debug log
+      const classification = await classifyText(userInput);
 
-      return res.json({ result: userInput });
+      return res.json({ result: classification });
     }
   } catch (error) {
     console.error('Error analyzing URL:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
-// // API endpoint to fetch assistants and send them to the client
-// app.get('/get-assistants', async (req, res) => {
-//   try {
-//     const assistantList = await getAssistantList();
-//     // Select the assistant from the assistant list with the name containing the topic
-//     const topicAssistant = assistantList.find(assistant => assistant.name.includes(topic));
-//     const biasAssistant = assistantList.find(assistant => assistant.name.includes('bias'));
-
-//     // Retrieve the assistants using the assistant IDs
-//     const factCheckAssistant = await retrieveAssistant(topicAssistant.id);
-//     const biasCheckAssistant = await retrieveAssistant(biasAssistant.id);
-//     res.json({ factCheckAssistant, biasCheckAssistant });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Failed to fetch assistants.' });
-//   }
-
-// });
 
 // // API endpoint to create a thread
 // app.get('/create-thread', async (req, res) => {

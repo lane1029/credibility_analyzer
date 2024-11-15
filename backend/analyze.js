@@ -17,22 +17,6 @@ export async function isUrlOrText(input) {
   return urlPattern.test(input) ? 'URL' : 'Text';
 };
 
-export async function analyzeURL(url) {
-  await client.connect();
-  const db = client.db('credibility_analyzer');
-  const filesCollection = db.collection('files');
-
-  // Example analysis logic
-  const relatedFiles = await filesCollection.find({ tags: { $regex: url, $options: 'i' } }).limit(3).toArray();
-  const context = relatedFiles.map(file => `${file.title}: ${file.content}`).join('\n\n');
-
-  const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages: [
-      { role: 'system', content: 'You are a credibility analyzer assistant.' },
-      { role: 'user', content: `Analyze the credibility of the content at: ${url}.\nContext:\n${context}` }
-    ],
-  });
-
-  return response.data.choices[0].message.content;
+export async function analyzeText(text, biasAssistant, factCheckAssistant) {
+  
 }
