@@ -17,14 +17,18 @@ export async function isUrlOrText(input) {
   return urlPattern.test(input) ? 'URL' : 'Text';
 };
 
-export async function analyzeBias(text, biasAssistant) {
-  const thread = await createThread()
-  const message = await createMessage(text, thread)
-  const run = await createRun(thread, biasAssistant)
-  const response = await getAssistantResponse(run)
-  const cleanedResponse = await cleanResponse(response)
-  return cleanedResponse
-
+export async function analyze(text, Assistant) {
+  try{
+    const thread = await createThread()
+    const message = await createMessage(text, thread)
+    const run = await createRun(thread, Assistant)
+    const response = await getAssistantResponse(run)
+    const cleanedResponse = await cleanResponse(response)
+    return cleanedResponse
+  } catch (error) {
+    console.error('Error analyzing bias:', error);
+    throw error;
+  }
 }
 
 // Function to create a message
