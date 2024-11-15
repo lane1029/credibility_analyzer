@@ -5,6 +5,7 @@ import { isUrlOrText, analyze } from './analyze.js';
 import { getAssistants } from './assistants.js';
 import { scrapeURL } from './scrape.js';
 import {classifyText} from './classify.js';
+import e from 'express';
 // Load environment variables
 dotenv.config();
 
@@ -26,32 +27,36 @@ app.use((req, res, next) => {
 });
 app.use(json());
 
-app.post('/api/analyze', async (req, res) => {
-  const { userInput } = req.body;
-
-  if (!userInput) {
-    console.log("No user input provided in request body"); // Debug log
-    return res.status(400).json({ error: 'User input is required' });
+app.get('/api/fetch-content', async (req, res) => {
+  const { url } = req.query;
+  if (!url) {
+    return res.status(400).send({ error: 'URL or Text is required' });
   }
 
   try {
     const inputType = await isUrlOrText(userInput);
-
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
-      const classification = await classifyText(textContent);
-      const assistants = await getAssistants(classification);
-      const biasAnalysis = await analyze(textContent, assistants[1]);
-      const factAnalysis = await analyze(textContent, assistants[0]);
-
-      return res.json({ "textContent": textContent, "biasResult" : biasAnalysis , "factResult" : factAnalysis });
+      res.json({ content: textContent });
     }
     else {
-      console.log("Analysis result:", userInput); // Debug log
-      const classification = await classifyText(userInput);
-
-      return res.json({ result: classification });
+      res.json({ content: userInput });
     }
+  } catch (error) {
+    console.error('Error fetching content:', error.message);
+    res.status(500).json({ error: 'Failed to fetch content' });
+  }
+});
+
+app.post('/api/analyze', async (req, res) => {
+  const { textContent } = req.body;
+  try {
+    const classification = await classifyText(textContent);
+    const assistants = await getAssistants(classification);
+    const biasAnalysis = await analyze(textContent, assistants[1]);
+    const factAnalysis = await analyze(textContent, assistants[0]);
+
+    return res.json({ "biasResult" : biasAnalysis , "factResult" : factAnalysis });
   } catch (error) {
     console.error('Error analyzing URL:', error);
     return res.status(500).json({ error: 'Internal server error' });
