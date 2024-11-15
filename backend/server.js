@@ -44,7 +44,7 @@ app.post('/api/analyze', async (req, res) => {
       const biasAnalysis = await analyze(textContent, assistants[1]);
       const factAnalysis = await analyze(textContent, assistants[0]);
 
-      return res.json({ "biasAnalysis" : biasAnalysis , "factAnalysis" : factAnalysis });
+      return res.json({ "biasResult" : biasAnalysis , "factResult" : factAnalysis });
     }
     else {
       console.log("Analysis result:", userInput); // Debug log

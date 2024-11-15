@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 
 function AnalyzerForm() {
   const [userInput, setUserInput] = useState('');
-  const [analysisResult, setAnalysisResult] = useState('');
+  const [biasResult, setBiasResult] = useState('');
+  const [factResult, setFactResult] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleAnalyze = async () => {
     setLoading(true);
-    setAnalysisResult('');
+    setBiasResult('');
+    setFactResult('');
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/analyze`, {
         method: 'POST',
@@ -16,10 +18,12 @@ function AnalyzerForm() {
       });
 
       const data = await response.json();
-      setAnalysisResult(data.result);
+      setBiasResult(data.biasResult);
+      setFactResult(data.factResult);
     } catch (error) {
       console.error('Error analyzing User Input:', error);
-      setAnalysisResult('An error occurred while analyzing the user input.');
+      setBiasResult('An error occurred while analyzing the user input.');
+      setFactResult('An error occurred while analyzing the user input.');
     }
     setLoading(false);
   };
@@ -35,7 +39,8 @@ function AnalyzerForm() {
       <button onClick={handleAnalyze} disabled={loading}>
         {loading ? 'Analyzing...' : 'Analyze'}
       </button>
-      {analysisResult && <div className="result">{analysisResult}</div>}
+      {biasResult && <div className="result">{biasResult}</div>}
+      {factResult && <div className="result">{factResult}</div>}
     </div>
   );
 }
