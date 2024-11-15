@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express, { json } from 'express';
 import cors from 'cors';
-import { isUrlOrText, analyzeURL } from './analyze.js';
+import { isUrlOrText, analyzeBias } from './analyze.js';
 import { getAssistants } from './assistants.js';
 import { scrapeURL } from './scrape.js';
 import {classifyText} from './classify.js';
@@ -40,9 +40,10 @@ app.post('/api/analyze', async (req, res) => {
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
       const classification = await classifyText(textContent);
+      const assistants = await getAssistants(classification);
+      const biasAnalysis = await analyzeBias(textContent, assistants[1]);
 
-
-      return res.json({ result: classification });
+      return res.json({ result: assistants[0] });
     }
     else {
       console.log("Analysis result:", userInput); // Debug log

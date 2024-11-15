@@ -17,6 +17,76 @@ export async function isUrlOrText(input) {
   return urlPattern.test(input) ? 'URL' : 'Text';
 };
 
-export async function analyzeText(text, biasAssistant, factCheckAssistant) {
-  
+export async function analyzeBias(text, biasAssistant) {
+  const thread = await createThread()
+  const message = await createMessage(text, thread)
+  const run = await createRun(thread, biasAssistant)
+  const response = await getAssistantResponse(run)
+  console.log(response)
+  return response
+
+}
+
+// Function to create a message
+async function createMessage(text, thread) {
+  try {
+    const message = await openai.beta.threads.messages.create(
+      thread.id,
+      {
+        role: "user",
+        content: text
+      }
+    );
+    return message;
+  } catch (error) { 
+    console.error('Error creating message:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+// Function to create a thread
+async function createThread() {
+  try{
+    let response = await openai.beta.threads.create()
+    return response;
+  } catch (error) {
+    console.error('Error creating thread:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function createRun(thread, assistant) {
+  try {
+    let run = await openai.beta.threads.runs.createAndPoll(
+      thread.id,
+      {
+        assistant_id: assistant.id,
+      }
+    );
+    return run;
+  } catch (error) {
+    console.error('Error creating run:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function getAssistantResponse(run) {
+  try {
+    if (run.status === 'completed') {
+      const messages = await openai.beta.threads.messages.list(
+        run.thread_id
+      );
+      console.log(messages.data.reverse());
+      for (const message of messages.data.reverse()) {
+        if (message.role === 'assistant')
+          return message.content[0].text.value;
+      }
+    } else {
+      console.log(run.status);
+      return "Assistant is still working on the response."
+    }
+  } catch (error) {
+    console.error('Error retrieving assistant response:', error.response?.data || error.message);
+    throw error;
+  }
 }
