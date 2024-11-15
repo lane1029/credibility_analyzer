@@ -29,18 +29,20 @@ function AnalyzerForm() {
   };
 
   return (
-    <div>
-      <input
-        type="text"
+    <div style={{ display: 'flex', alignItems: 'flex-start', padding: '20px' }}>
+      <textarea
+        className="text-input"
         placeholder="Enter URL or Text Block"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <button onClick={handleAnalyze} disabled={loading}>
-        {loading ? 'Analyzing...' : 'Analyze'}
-      </button>
-      {biasResult && <div className="result">{biasResult}</div>}
-      {factResult && <div className="result">{factResult}</div>}
+      <div style={{ marginLeft: '20px' }}>
+        <button onClick={handleAnalyze} disabled={loading}>
+          {loading ? 'Analyzing...' : 'Analyze'}
+        </button>
+        {biasResult && <div className="result">{biasResult}</div>}
+        {factResult && <div className="result">{factResult}</div>}
+      </div>
     </div>
   );
 }
