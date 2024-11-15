@@ -22,8 +22,8 @@ export async function analyzeBias(text, biasAssistant) {
   const message = await createMessage(text, thread)
   const run = await createRun(thread, biasAssistant)
   const response = await getAssistantResponse(run)
-  console.log(response)
-  return response
+  const cleanedResponse = await cleanResponse(response)
+  return cleanedResponse
 
 }
 
@@ -76,7 +76,6 @@ async function getAssistantResponse(run) {
       const messages = await openai.beta.threads.messages.list(
         run.thread_id
       );
-      console.log(messages.data.reverse());
       for (const message of messages.data.reverse()) {
         if (message.role === 'assistant')
           return message.content[0].text.value;
@@ -89,4 +88,11 @@ async function getAssistantResponse(run) {
     console.error('Error retrieving assistant response:', error.response?.data || error.message);
     throw error;
   }
+}
+
+async function cleanResponse(response) {
+  let cleanedResponse = response.split('```')[1]?.trim() || response;
+  cleanedResponse = cleanedResponse.replace(/^json\s*/, '');
+  console.log("Cleaned response:", cleanedResponse);
+  return cleanedResponse;
 }

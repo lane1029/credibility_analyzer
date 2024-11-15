@@ -43,7 +43,7 @@ app.post('/api/analyze', async (req, res) => {
       const assistants = await getAssistants(classification);
       const biasAnalysis = await analyzeBias(textContent, assistants[1]);
 
-      return res.json({ result: assistants[0] });
+      return res.json({ result: biasAnalysis });
     }
     else {
       console.log("Analysis result:", userInput); // Debug log
