@@ -97,6 +97,5 @@ async function getAssistantResponse(run) {
 async function cleanResponse(response) {
   let cleanedResponse = response.split('```')[1]?.trim() || response;
   cleanedResponse = cleanedResponse.replace(/^json\s*/, '');
-  console.log("Cleaned response:", cleanedResponse);
   return cleanedResponse;
 }

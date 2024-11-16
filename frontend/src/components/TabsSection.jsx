@@ -3,9 +3,6 @@ import FactAssessment from './FactAssessment';
 import BiasTab from './BiasTab';
 
 function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
-  console.log('credibilityResult:', credibilityResult);
-  console.log('biasResult:', biasResult);
-  console.log('factResult:', factResult);
   const [activeTab, setActiveTab] = useState('credibilityResult');
 
 
@@ -28,7 +25,7 @@ function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
           <p>Running analysis...</p>
         ) : activeTab === 'credibilityResult' ? (
           <p>{credibilityResult}</p>
-        ) : activeTab === 'bias' ? (
+        ) : activeTab === 'biasResult' ? (
           <BiasTab bias={biasResult} />
         ) : (
           <FactAssessment facts={factResult} />

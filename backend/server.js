@@ -50,7 +50,6 @@ app.post('/api/fetch-content', async (req, res) => {
 
 app.post('/api/analyze', async (req, res) => {
   const { textContent } = req.body;
-  console.log(textContent);
   try {
     const classification = await classifyText(textContent);
     const assistants = await getAssistants(classification);

@@ -56,10 +56,6 @@ function App() {
         body: JSON.stringify({ textContent : content }),
       });
       const data = await response.json();
-      console.log('credibilityResult:', data.credibilityResult);
-      console.log('biasResult:', data.biasResult);
-      console.log('factResult:', data.factResult);
-
       setAnalysisResults(data);
     } catch (error) {
       console.error('Error running analysis:', error);
