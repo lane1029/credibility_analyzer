@@ -8,9 +8,9 @@ function App() {
   const [userInput, setUserInput] = useState('');
   const [previewContent, setPreviewContent] = useState('');
   const [analysisResults, setAnalysisResults] = useState({
-    credibility: '',
-    bias: '',
-    facts: [],
+    credibilityResult: '',
+    biasResult: {},
+    factResult: [],
   });
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
@@ -21,7 +21,7 @@ function App() {
 
     setLoadingPreview(true);
     setPreviewContent('');
-    setAnalysisResults({ credibility: '', bias: {}, facts: [] }); // Reset analysis results
+    setAnalysisResults({ credibilityResult: '', biasResult: {}, factResult: [] }); // Reset analysis results
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/fetch-content`, {
@@ -56,13 +56,17 @@ function App() {
         body: JSON.stringify({ textContent : content }),
       });
       const data = await response.json();
+      console.log('credibilityResult:', data.credibilityResult);
+      console.log('biasResult:', data.biasResult);
+      console.log('factResult:', data.factResult);
 
       setAnalysisResults(data);
     } catch (error) {
       console.error('Error running analysis:', error);
       setAnalysisResults({
-        bias: 'Error',
-        facts: [],
+        credibilityResult: 'Error',
+        biasResult: {},
+        factResult: [],
       });
     } finally {
       setLoadingAnalysis(false);
@@ -86,9 +90,9 @@ function App() {
           />
         </div>
         <TabsSection
-          credibility={analysisResults.credibility}
-          bias={analysisResults.bias}
-          facts={analysisResults.facts}
+          credibilityResult={analysisResults.credibilityResult}
+          biasResult={analysisResults.biasResult}
+          factResult={analysisResults.factResult}
           loading={loadingAnalysis}
         />
       </div>

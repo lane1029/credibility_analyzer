@@ -57,7 +57,7 @@ app.post('/api/analyze', async (req, res) => {
     const biasAnalysis = await analyze(textContent, assistants[1]);
     const factAnalysis = await analyze(textContent, assistants[0]);
 
-    return res.json({ "credibility": "placeholder for real response", "biasResult" : biasAnalysis , "factResult" : factAnalysis });
+    return res.json({ "credibilityResult": "placeholder for real response", "biasResult" : biasAnalysis , "factResult" : factAnalysis });
   } catch (error) {
     console.error('Error analyzing URL:', error);
     return res.status(500).json({ error: 'Internal server error' });

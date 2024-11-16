@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import FactAssessment from './FactAssessment';
+import BiasTab from './BiasTab';
 
-function TabsSection({ credibility, bias, facts, loading }) {
-  const [activeTab, setActiveTab] = useState('credibility');
+function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
+  console.log('credibilityResult:', credibilityResult);
+  console.log('biasResult:', biasResult);
+  console.log('factResult:', factResult);
+  const [activeTab, setActiveTab] = useState('credibilityResult');
+
 
   return (
     <div style={tabsSectionStyle}>
       <div style={tabsStyle}>
-        <button onClick={() => setActiveTab('credibility')} style={tabButtonStyle}>
+        <button onClick={() => setActiveTab('credibilityResult')} style={tabButtonStyle}>
           Credibility
         </button>
-        <button onClick={() => setActiveTab('bias')} style={tabButtonStyle}>
+        <button onClick={() => setActiveTab('biasResult')} style={tabButtonStyle}>
           Bias
         </button>
-        <button onClick={() => setActiveTab('facts')} style={tabButtonStyle}>
+        <button onClick={() => setActiveTab('factResult')} style={tabButtonStyle}>
           Facts
         </button>
       </div>
@@ -21,12 +26,12 @@ function TabsSection({ credibility, bias, facts, loading }) {
       <div style={tabContentStyle}>
         {loading ? (
           <p>Running analysis...</p>
-        ) : activeTab === 'credibility' ? (
-          <p>{credibility}</p>
+        ) : activeTab === 'credibilityResult' ? (
+          <p>{credibilityResult}</p>
         ) : activeTab === 'bias' ? (
-          <p>{bias}</p>
+          <BiasTab bias={biasResult} />
         ) : (
-          <FactAssessment facts={facts} />
+          <FactAssessment facts={factResult} />
         )}
       </div>
     </div>

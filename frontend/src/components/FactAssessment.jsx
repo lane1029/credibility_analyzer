@@ -1,6 +1,15 @@
+import React, { useState } from 'react';
+
 // components/FactAssessment.jsx
 function FactAssessment({ facts }) {
-    const [selectedFact, setSelectedFact] = useState(null);
+    const [selectedFact, setSelectedFact] = useState(
+      {
+        claim: "Select a claim to view details", 
+        truth_value: "", 
+        confidence_score: 0, 
+        facts : "",
+        sources : []
+      });
   
     return (
       <div>
