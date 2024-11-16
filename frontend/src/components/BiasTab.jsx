@@ -4,22 +4,20 @@ function BiasTab({ bias }) {
   if (!bias) {
     return <p>No bias data available.</p>;
   }
-
-  const { 'Bias evaluation': evaluation, 'Confidence score': score, Evidence: evidence } = bias;
-
+  const parsedBias = typeof bias === 'string' ? JSON.parse(bias) : bias;
   return (
     <div style={biasTabStyle}>
       {/* Bias Evaluation and Confidence Score Section */}
       <div style={biasEvaluationStyle}>
         <h3>Bias Evaluation</h3>
-        <p><strong>Evaluation:</strong> {evaluation}</p>
-        <p><strong>Confidence Score:</strong> {score}</p>
+        <p><strong>Evaluation:</strong> {parsedBias.evaluation}</p>
+        <p><strong>Confidence Score:</strong> {parsedBias.confidence_score}</p>
       </div>
 
       {/* Evidence Section */}
       <div style={biasEvidenceStyle}>
         <h3>Evidence</h3>
-        <p>{evidence}</p>
+        <p>{parsedBias.evidence}</p>
       </div>
     </div>
   );
