@@ -25,11 +25,13 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
-app.use(json());
+app.use(express.json());
 
-app.get('/api/fetch-content', async (req, res) => {
-  const { url } = req.query;
-  if (!url) {
+app.post('/api/fetch-content', async (req, res) => {
+  console.log(req);
+  const { userInput } = req.query;
+  console.log('URL:', userInput);
+  if (!userInput) {
     return res.status(400).send({ error: 'URL or Text is required' });
   }
 
@@ -37,6 +39,7 @@ app.get('/api/fetch-content', async (req, res) => {
     const inputType = await isUrlOrText(userInput);
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
+      console.log('Scraped content:', textContent);
       res.json({ content: textContent });
     }
     else {
