@@ -26,7 +26,7 @@ const inputSectionStyle = {
 
 const textAreaStyle = {
   width: '100%',
-  height: '150px',
+  height: '50px',
   padding: '10px',
   fontSize: '16px',
   borderRadius: '5px',

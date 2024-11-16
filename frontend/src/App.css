@@ -19,11 +19,24 @@ button {
 
 textarea {
   width: 50%;
-  height: 150px; /* Default height */
+  height: 50px; /* Default height */
   resize: vertical; /* Allow vertical resizing */
   overflow-y: scroll; /* Add vertical scroll bar */
   padding: 10px; /* Add padding for better readability */
   font-size: 16px; /* Adjust font size for readability */
   border: 1px solid #ccc; /* Add a border */
   border-radius: 5px; /* Add rounded corners */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
 }

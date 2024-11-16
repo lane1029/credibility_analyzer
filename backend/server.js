@@ -28,9 +28,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.post('/api/fetch-content', async (req, res) => {
-  console.log(req);
-  const { userInput } = req.query;
-  console.log('URL:', userInput);
+  const { userInput } = req.body;
   if (!userInput) {
     return res.status(400).send({ error: 'URL or Text is required' });
   }
@@ -39,7 +37,6 @@ app.post('/api/fetch-content', async (req, res) => {
     const inputType = await isUrlOrText(userInput);
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
-      console.log('Scraped content:', textContent);
       res.json({ content: textContent });
     }
     else {
@@ -53,13 +50,14 @@ app.post('/api/fetch-content', async (req, res) => {
 
 app.post('/api/analyze', async (req, res) => {
   const { textContent } = req.body;
+  console.log(textContent);
   try {
     const classification = await classifyText(textContent);
     const assistants = await getAssistants(classification);
     const biasAnalysis = await analyze(textContent, assistants[1]);
     const factAnalysis = await analyze(textContent, assistants[0]);
 
-    return res.json({ "biasResult" : biasAnalysis , "factResult" : factAnalysis });
+    return res.json({ "credibility": "placeholder for real response", "biasResult" : biasAnalysis , "factResult" : factAnalysis });
   } catch (error) {
     console.error('Error analyzing URL:', error);
     return res.status(500).json({ error: 'Internal server error' });
