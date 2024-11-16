@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 dotenv.config();
-console.log("MONGO_URI:", process.env.MONGODB_URI);  // Debugging line
 
 import { MongoClient } from 'mongodb';
 import { OpenAI } from 'openai';
