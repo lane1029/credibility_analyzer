@@ -15,14 +15,14 @@ async function calculateCredibilityScore(biasAnalysis, factAnalysis) {
     factAnalysis = JSON.parse(factAnalysis);
   }
   // Step 1: Bias Contribution
-  const biasMultiplier = biasAnalysis.evaluation.toLowerCase() === "unbiased" ? 1 : -1;
+  const biasMultiplier = biasAnalysis.evaluation.toLowerCase() === "unbiased" ? 1 : 0;
   const biasContribution = biasMultiplier * biasAnalysis.confidence_score;
 
   // Step 2: Fact Check Contribution
   const truthValueWeights = {
     "true": 1,
-    "false": -1,
-    "Needs Context": -0.5,
+    "false": 0,
+    "Needs Context": 0.5,
   };
 
   let factScoreSum = 0;
@@ -43,8 +43,8 @@ async function calculateCredibilityScore(biasAnalysis, factAnalysis) {
       (weightBias + weightFact) * 100
     );
 
-  // Clamp the score to the range [-1, 1]
-  finalScore = Math.max(-100, Math.min(100, finalScore));
+  // Clamp the score to the range [0, 100]
+  finalScore = Math.max(0, Math.min(100, finalScore));
   
   return finalScore;
 }
