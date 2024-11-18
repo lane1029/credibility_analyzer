@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 
-// components/FactAssessment.jsx
 function FactAssessment({ facts }) {
-
-  const [selectedFact, setSelectedFact] = useState(
-    {
-      claim: "Select a claim to view details", 
-      truth_value: "", 
-      confidence_score: 0, 
-      facts : "",
-      sources : []
-    });
+  const [selectedFact, setSelectedFact] = useState({
+    claim: "Select a claim to view details", 
+    truth_value: "", 
+    confidence_score: 0, 
+    facts: "",
+    sources: []
+  });
 
   let parsedFacts = [];
 
@@ -19,28 +16,34 @@ function FactAssessment({ facts }) {
   } catch (error) {
     console.error('Failed to parse facts:', error);
   }
-  
-  console.log(parsedFacts);
+
   if (!Array.isArray(parsedFacts)) {
     return <p>No facts available.</p>;
   }
 
-
-  
   return (
     <div>
       <h4>Select a Claim:</h4>
-      <ul style={factListStyle}>
+      {/* Dropdown for selecting a fact */}
+      <select
+        style={dropdownStyle}
+        onChange={(e) => {
+          const factIndex = e.target.value;
+          if (factIndex !== "") {
+            setSelectedFact(parsedFacts[factIndex]);
+          }
+        }}
+        defaultValue=""
+      >
+        <option value="" disabled>
+          Select a claim
+        </option>
         {parsedFacts.map((fact, index) => (
-          <li
-            key={index}
-            onClick={() => setSelectedFact(fact)}
-            style={factItemStyle}
-          >
+          <option key={index} value={index}>
             {fact.claim}
-          </li>
+          </option>
         ))}
-      </ul>
+      </select>
 
       {selectedFact && (
         <div style={factDetailStyle}>
@@ -64,16 +67,12 @@ function FactAssessment({ facts }) {
     </div>
   );
 }
-  
-const factListStyle = {
-  listStyleType: 'none',
-  padding: 0,
-};
 
-const factItemStyle = {
-  padding: '5px 0',
-  cursor: 'pointer',
-  borderBottom: '1px solid #ccc',
+const dropdownStyle = {
+  width: '100%',
+  padding: '8px',
+  fontSize: '16px',
+  marginBottom: '20px',
 };
 
 const factDetailStyle = {
