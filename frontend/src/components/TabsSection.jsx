@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FactAssessment from './FactAssessment';
 import BiasTab from './BiasTab';
+import CredibiltyTab from './CredibilityTab';
 
 function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
   const [activeTab, setActiveTab] = useState('credibilityResult');
@@ -24,7 +25,7 @@ function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
         {loading ? (
           <p>Running analysis...</p>
         ) : activeTab === 'credibilityResult' ? (
-          <p>{credibilityResult}</p>
+          <CredibiltyTab credibility={credibilityResult} />
         ) : activeTab === 'biasResult' ? (
           <BiasTab bias={biasResult} />
         ) : (

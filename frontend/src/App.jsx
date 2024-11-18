@@ -21,7 +21,7 @@ function App() {
 
     setLoadingPreview(true);
     setPreviewContent('');
-    setAnalysisResults({ credibilityResult: '', biasResult: {}, factResult: [] }); // Reset analysis results
+    setAnalysisResults({ credibilityResult: {}, biasResult: {}, factResult: [] }); // Reset analysis results
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/fetch-content`, {
@@ -60,7 +60,7 @@ function App() {
     } catch (error) {
       console.error('Error running analysis:', error);
       setAnalysisResults({
-        credibilityResult: 'Error',
+        credibilityResult: {},
         biasResult: {},
         factResult: [],
       });
