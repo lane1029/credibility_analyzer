@@ -1,67 +1,53 @@
 import React, { useState } from 'react';
 import FactAssessment from './FactAssessment';
 import BiasTab from './BiasTab';
-import CredibiltyTab from './CredibilityTab';
+import CredibilityTab from './CredibilityTab';
+
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
 function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
-  const [activeTab, setActiveTab] = useState('credibilityResult');
+  const [activeTab, setActiveTab] = useState(0); // Use index-based tabs for MUI
 
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
 
   return (
-    <div style={tabsSectionStyle}>
-      <div style={tabsStyle}>
-        <button onClick={() => setActiveTab('credibilityResult')} style={tabButtonStyle}>
-          Credibility
-        </button>
-        <button onClick={() => setActiveTab('biasResult')} style={tabButtonStyle}>
-          Bias
-        </button>
-        <button onClick={() => setActiveTab('factResult')} style={tabButtonStyle}>
-          Facts
-        </button>
-      </div>
+    <Box sx={{ width: '50%' }}>
+      {/* Tab Bar */}
+      <Tabs
+        value={activeTab}
+        onChange={handleTabChange}
+        variant="fullWidth" // Makes the tabs span across the width
+        textColor="primary"
+        indicatorColor="primary"
+        sx={{
+          border: '2px solid #007bff', // Add the outline
+          padding: '5px', // Optional: add some padding inside the outline
+          backgroundColor: '#f9f9f9', // Optional: background for the tab bar
+        }}
+      >
+        <Tab label="Credibility" />
+        <Tab label="Bias" />
+        <Tab label="Facts" />
+      </Tabs>
 
-      <div style={tabContentStyle}>
+      {/* Tab Content */}
+      <Box sx={{ padding: '20px', border: '1px solid #ccc', backgroundColor: '#f9f9f9', minHeight: '200px' }}>
         {loading ? (
           <p>Running analysis...</p>
-        ) : activeTab === 'credibilityResult' ? (
-          <CredibiltyTab credibility={credibilityResult} />
-        ) : activeTab === 'biasResult' ? (
+        ) : activeTab === 0 ? (
+          <CredibilityTab credibility={credibilityResult} />
+        ) : activeTab === 1 ? (
           <BiasTab bias={biasResult} />
         ) : (
           <FactAssessment facts={factResult} />
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
-
-const tabsSectionStyle = {
-  width: '50%',
-  marginLeft: '2%',
-};
-
-const tabsStyle = {
-  display: 'flex',
-  justifyContent: 'space-around',
-  marginBottom: '10px',
-};
-
-const tabButtonStyle = {
-  padding: '10px 20px',
-  fontSize: '16px',
-  cursor: 'pointer',
-  border: '1px solid #ccc',
-  borderRadius: '5px',
-  backgroundColor: '#f1f1f1',
-};
-
-const tabContentStyle = {
-  padding: '10px',
-  border: '1px solid #ccc',
-  borderRadius: '5px',
-  backgroundColor: '#f9f9f9',
-  minHeight: '200px',
-};
 
 export default TabsSection;

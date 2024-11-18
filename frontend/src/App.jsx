@@ -110,7 +110,7 @@ const mainContentStyle = {
 };
 
 const leftColumnStyle = {
-  width: '40%',
+  width: '45%',
   display: 'flex',
   flexDirection: 'column',
 };
