@@ -70,27 +70,29 @@ function App() {
   };
 
   return (
-    <div style={appContainerStyle}>
-      {/* Header at the top */}
-      <Header />
-      <div style={mainContentStyle}>
-        <div style={leftColumnStyle}>
-          <InputSection
-            userInput={userInput}
-            setUserInput={setUserInput}
-            handleFetchPreview={handleFetchPreview}
-          />
-          <PreviewSection
-            previewContent={previewContent}
-            loading={loadingPreview}
+    <div style={backgroundStyle}>
+      <div style={appContainerStyle}>
+        {/* Header at the top */}
+        <Header />
+        <div style={mainContentStyle}>
+          <div style={leftColumnStyle}>
+            <InputSection
+              userInput={userInput}
+              setUserInput={setUserInput}
+              handleFetchPreview={handleFetchPreview}
+            />
+            <PreviewSection
+              previewContent={previewContent}
+              loading={loadingPreview}
+            />
+          </div>
+          <TabsSection
+            credibilityResult={analysisResults.credibilityResult}
+            biasResult={analysisResults.biasResult}
+            factResult={analysisResults.factResult}
+            loading={loadingAnalysis}
           />
         </div>
-        <TabsSection
-          credibilityResult={analysisResults.credibilityResult}
-          biasResult={analysisResults.biasResult}
-          factResult={analysisResults.factResult}
-          loading={loadingAnalysis}
-        />
       </div>
     </div>
   );
@@ -113,6 +115,15 @@ const leftColumnStyle = {
   width: '45%',
   display: 'flex',
   flexDirection: 'column',
+};
+
+const backgroundStyle = {
+  backgroundImage: `url('/background.jpg')`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  height: '100vh', // Full viewport height
+  width: '100vw', // Full viewport width
 };
 
 export default App;
