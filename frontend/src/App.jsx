@@ -14,6 +14,8 @@ function App() {
   });
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
+  const [isAnalysisRun, setIsAnalysisRun] = useState(false);
+
 
   // Function to fetch preview content
   const handleFetchPreview = async () => {
@@ -22,6 +24,7 @@ function App() {
     setLoadingPreview(true);
     setPreviewContent('');
     setAnalysisResults({ credibilityResult: {}, biasResult: {}, factResult: [] }); // Reset analysis results
+    setIsAnalysisRun(false);
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/fetch-content`, {
@@ -57,6 +60,7 @@ function App() {
       });
       const data = await response.json();
       setAnalysisResults(data);
+      setIsAnalysisRun(true);
     } catch (error) {
       console.error('Error running analysis:', error);
       setAnalysisResults({
@@ -79,24 +83,27 @@ function App() {
             setUserInput={setUserInput}
             handleFetchPreview={handleFetchPreview}
           />
-          <div style={rowLayoutStyle}>
-            {/* Preview Section (Narrower) */}
-            <div style={previewSectionWrapperStyle}>
-              <PreviewSection
-                previewContent={previewContent}
-                loading={loadingPreview}
-              />
+          {/* Conditionally Render Preview and Tabs */}
+          {isAnalysisRun && (
+            <div style={rowLayoutStyle}>
+              {/* Preview Section */}
+              <div style={previewSectionWrapperStyle}>
+                <PreviewSection
+                  previewContent={previewContent}
+                  loading={loadingPreview}
+                />
+              </div>
+              {/* Tabs Section */}
+              <div style={tabsSectionWrapperStyle}>
+                <TabsSection
+                  credibilityResult={analysisResults.credibilityResult}
+                  biasResult={analysisResults.biasResult}
+                  factResult={analysisResults.factResult}
+                  loading={loadingAnalysis}
+                />
+              </div>
             </div>
-            {/* Tabs Section (Wider) */}
-            <div style={tabsSectionWrapperStyle}>
-              <TabsSection
-                credibilityResult={analysisResults.credibilityResult}
-                biasResult={analysisResults.biasResult}
-                factResult={analysisResults.factResult}
-                loading={loadingAnalysis}
-              />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
@@ -121,7 +128,10 @@ const rowLayoutStyle = {
   flexDirection: 'row',
   gap: '20px', // Space between preview and tabs
   width: '100%',
+  padding: '0 60px', // Adds padding on both sides (left and right)
+  boxSizing: 'border-box', // Ensures padding is included in the element's total width
 };
+
 
 const previewSectionWrapperStyle = {
   flex: 2, // Takes 1 portion of the available space
