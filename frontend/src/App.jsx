@@ -72,26 +72,31 @@ function App() {
   return (
     <div style={backgroundStyle}>
       <div style={appContainerStyle}>
-        {/* Header at the top */}
         <Header />
         <div style={mainContentStyle}>
-          <div style={leftColumnStyle}>
-            <InputSection
-              userInput={userInput}
-              setUserInput={setUserInput}
-              handleFetchPreview={handleFetchPreview}
-            />
-            <PreviewSection
-              previewContent={previewContent}
-              loading={loadingPreview}
-            />
-          </div>
-          <TabsSection
-            credibilityResult={analysisResults.credibilityResult}
-            biasResult={analysisResults.biasResult}
-            factResult={analysisResults.factResult}
-            loading={loadingAnalysis}
+          <InputSection
+            userInput={userInput}
+            setUserInput={setUserInput}
+            handleFetchPreview={handleFetchPreview}
           />
+          <div style={rowLayoutStyle}>
+            {/* Preview Section (Narrower) */}
+            <div style={previewSectionWrapperStyle}>
+              <PreviewSection
+                previewContent={previewContent}
+                loading={loadingPreview}
+              />
+            </div>
+            {/* Tabs Section (Wider) */}
+            <div style={tabsSectionWrapperStyle}>
+              <TabsSection
+                credibilityResult={analysisResults.credibilityResult}
+                biasResult={analysisResults.biasResult}
+                factResult={analysisResults.factResult}
+                loading={loadingAnalysis}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -106,15 +111,26 @@ const appContainerStyle = {
 
 const mainContentStyle = {
   display: 'flex',
-  justifyContent: 'space-between',
+  flexDirection: 'column',
   padding: '20px',
-  flexGrow: 1,
+  gap: '20px', // Space between input and row layout
 };
 
-const leftColumnStyle = {
-  width: '45%',
+const rowLayoutStyle = {
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
+  gap: '20px', // Space between preview and tabs
+  width: '100%',
+};
+
+const previewSectionWrapperStyle = {
+  flex: 2, // Takes 1 portion of the available space
+  display: 'flex',
+};
+
+const tabsSectionWrapperStyle = {
+  flex: 3, // Takes 2 portions of the available space
+  display: 'flex',
 };
 
 const backgroundStyle = {
