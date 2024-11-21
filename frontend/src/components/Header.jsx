@@ -13,7 +13,7 @@ const headerStyle = {
   padding: '10px 20px', // Controls padding inside the header box
   justifyContent: 'center', // Horizontally centers the content
   height: 'Auto',
-  backgroundColor: 'rgba(201, 199, 186, 0.7)',
+  background: 'linear-gradient(to bottom, rgba(201, 199, 186, 1), rgba(201, 199, 186, 0))', // Gradient from opaque to transparent
   color: '#53585c',
   fontFamily: 'Kalam, sans-serif',
 };
