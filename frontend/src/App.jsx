@@ -3,6 +3,7 @@ import Header from './components/Header';
 import InputSection from './components/InputSection';
 import PreviewSection from './components/PreviewSection';
 import TabsSection from './components/TabsSection';
+import './App.css';
 
 function App() {
   const [userInput, setUserInput] = useState('');
@@ -83,6 +84,16 @@ function App() {
             setUserInput={setUserInput}
             handleFetchPreview={handleFetchPreview}
           />
+          {/* Running Analysis Message */}
+          {loadingAnalysis && (
+            <div style={runningMessageStyle}>
+              Running Analysis<span className="dot-wave">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </span>
+            </div>
+          )}
           {/* Conditionally Render Preview and Tabs */}
           {isAnalysisRun && (
             <div style={rowLayoutStyle}>
@@ -121,6 +132,16 @@ const mainContentStyle = {
   flexDirection: 'column',
   padding: '20px',
   gap: '20px', // Space between input and row layout
+};
+
+const runningMessageStyle = {
+  fontSize: '1.2rem',
+  color: '#606970',
+  marginTop: '10px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '5px',
 };
 
 const rowLayoutStyle = {
