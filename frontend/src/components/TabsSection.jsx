@@ -15,7 +15,7 @@ function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
   };
 
   return (
-    <Box sx={{ width: '50%' }}>
+    <Box sx={{ width: '100%' }}>
       {/* Tab Bar */}
       <Tabs
         value={activeTab}
