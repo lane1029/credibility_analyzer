@@ -11,9 +11,8 @@ const headerStyle = {
   display: 'flex', // Use Flexbox
   alignItems: 'center', // Vertically centers the content
   padding: '10px 20px', // Controls padding inside the header box
-  height: 'auto', // Allows the height to shrink with the content
   justifyContent: 'center', // Horizontally centers the content
-  height: '100px',
+  height: 'Auto',
   backgroundColor: 'rgba(201, 199, 186, 0.7)',
   color: '#53585c',
   fontFamily: 'Kalam, sans-serif',
