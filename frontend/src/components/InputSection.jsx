@@ -27,6 +27,7 @@ const inputStyle = {
   backgroundColor: '#e6e5de',
   color: '#53585c',
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // Add glow effect
+  fontFamily: 'Shippori Antique B1, sans-serif',
 };
 
 const buttonStyle = {
@@ -39,6 +40,7 @@ const buttonStyle = {
   color: '#e6e5de',
   cursor: 'pointer',
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // Add glow effect
+  fontFamily: 'Shippori Antique B1, sans-serif',
 };
 
 export default InputSection;

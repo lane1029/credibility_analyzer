@@ -138,8 +138,6 @@ const mainContentStyle = {
 
 const inputSectionContainerStyle = {
   width: '70%',
-  // maxWidth: '800px', // Optional: limit the maximum width
-  // minWidth: '300px', // Optional: ensure a minimum width
   margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
@@ -148,13 +146,14 @@ const inputSectionContainerStyle = {
 };
 
 const runningMessageStyle = {
-  fontSize: '1.2rem',
-  color: '#606970',
+  fontSize: '1.5rem',
+  color: '#66645b',
   marginTop: '10px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   gap: '5px',
+  fontWeight: 'bold', // Make the text bold
 };
 
 const rowLayoutStyle = {
