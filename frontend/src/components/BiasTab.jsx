@@ -13,7 +13,7 @@ function BiasTab({ bias }) {
       {/* Tooltip Icon in Top Right */}
       <div style={tooltipIconWrapperStyle}>
         <Tooltip
-          title="The bias evaluation utilizes OpenAI and nstural language processing to identify and evaluate bias in the text. For more information onhow this is done, please visit the Learn More page."
+          title="The bias evaluation utilizes OpenAI and natural language processing to identify and evaluate bias in the text. For more information on how this is done, please visit the Learn More page."
           arrow
         >
           <InfoIcon fontSize="small" style={tooltipIconStyle} />
