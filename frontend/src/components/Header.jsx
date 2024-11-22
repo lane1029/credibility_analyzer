@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
+  const location = useLocation();
+
   return (
     <header style={headerStyle}>
       <h1 style={headerTextStyle}>V E R A C I T Y</h1>
       <nav style={navStyle}>
-        <Link to="/" style={linkStyle}>Home</Link>
-        <Link to="/second" style={linkStyle}>Second Page</Link>
+        <Link to="/" style={location.pathname === '/' ? activeLinkStyle : linkStyle}>Home</Link>
+        <Link to="/second" style={location.pathname === '/second' ? activeLinkStyle : linkStyle}>Second Page</Link>
       </nav>
     </header>
   );
@@ -38,13 +40,21 @@ const navStyle = {
   display: 'flex',
   gap: '20px',
   position: 'absolute', // Position the nav absolutely
-  right: '20px', // Align it to the right
+  left: '20px', // Align it to the right
 };
 
 const linkStyle = {
   textDecoration: 'none',
-  color: '#606970',
-  fontSize: '1rem',
+  fontSize: '1.5rem',
+  fontWeight: '800',
+  color: '#5F6D78',
+  fontFamily: 'Namdhinggo, serif',
+  textShadow: '4px 4px 8px rgba(0, 0, 0, 0.2)',
+};
+
+const activeLinkStyle = {
+  ...linkStyle,
+  color: '#b77b82', // Change this to the desired active color
 };
 
 export default Header;

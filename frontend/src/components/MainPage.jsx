@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from './Header';
 import InputSection from './InputSection';
 import PreviewSection from './PreviewSection';
 import TabsSection from './TabsSection';
@@ -76,7 +75,6 @@ function MainPage() {
 
   return (
     <div style={appContainerStyle}>
-    {/* <Header /> */}
     <div style={mainContentStyle}>
         <div style={inputSectionContainerStyle}>
         <InputSection
