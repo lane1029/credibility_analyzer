@@ -1,35 +1,57 @@
 import React from 'react';
+import Box from '@mui/material/Box';
 
 function PreviewSection({ previewContent, loading }) {
   return (
-    <div style={previewSectionStyle}>
-      <h3>Preview</h3>
-      {loading ? (
-        <p>Loading preview...</p>
-      ) : (
-        <div style={contentStyle}>
-          <p>{previewContent || 'Your content will appear here...'}</p>
-        </div>
-      )}
-    </div>
+    <Box sx={{ width: '100%' }}>
+      <Box sx={headerSectionStyle}>
+        <h3 style={headerStyle}>P R E V I E W</h3>
+      </Box>
+      <Box sx={contentSectionStyle}>
+        <Box sx={contentStyle}>
+          <p>{previewContent}</p>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
-const previewSectionStyle = {
-  width: '100%',
-  padding: '10px',
-  border: '1px solid #ccc',
-  borderRadius: '5px',
-  backgroundColor: '#f9f9f9',
-  // minHeight: '100px',
+const headerSectionStyle = {
+  boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+  padding: '20px', 
+  border: '1px solid #ccc', 
+  borderRadius: '5px', 
+  backgroundColor: '#e6e5de'
+};
+
+const headerStyle = {
+  margin: '0',
+  fontFamily: 'Namdhinggo, serif',
+  fontWeight: '800',
+  fontSize: '1.3rem',
+  color: '#53585c',
+};
+
+const contentSectionStyle = {
   maxHeight: '50vh',
-  overflowY: 'scroll',
-  overflowX: 'hidden',
+  boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+  padding: '20px', 
+  border: '1px solid #ccc', 
+  borderRadius: '5px', 
+  backgroundColor: '#e6e5de',
 };
 
 const contentStyle = {
-  whiteSpace: 'pre-wrap', // Preserve line breaks and spacing
-  fontSize: '14px', // Adjust font size for readability
-  lineHeight: '1.6', // Adjust line spacing for better readability
+  whiteSpace: 'pre-wrap',
+  fontSize: '14px',
+  lineHeight: '1.6',
+  fontFamily: 'Shippori Antique B1, sans-serif',
+  backgroundColor: '#fafafa',
+  overflowY: 'scroll',
+  overflowX: 'hidden',
+  maxHeight: '40vh',
+  borderRadius: '5px',
+  padding: '10px',
 };
+
 export default PreviewSection;
