@@ -28,8 +28,10 @@ function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
           indicatorColor="primary" // Set the indicator color
           sx={{
             padding: '5px', // Optional: add some padding inside the outline
+            border: '1px solid #ccc',
             borderRadius: '5px', // Optional: Add rounded corners
             backgroundColor: '#e6e5de', // Optional: background for the tab bar
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // Add glow effect
           }}
         >
           <Tab
@@ -63,7 +65,8 @@ function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
         
 
         {/* Tab Content */}
-        <Box sx={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#e6e5de', minHeight: '200px' }}>
+        <Box sx={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#e6e5de', minHeight: '200px',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
           {loading ? (
             <p>Running analysis...</p>
           ) : activeTab === 0 ? (
