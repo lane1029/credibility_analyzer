@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './components/MainPage'; // Your main page
 import LearnMorePage from './components/LearnMorePage'; // The second page
 import Header from './components/Header'; // Common Header
+import './App.css';
 
 function App() {
   return (
-    <div style={backgroundStyle}>
+    <div className="app-container">
+      <div className="background"></div>
       <Router>
         <Header /> {/* Common header displayed on all pages */}
         <Routes>
@@ -17,13 +19,4 @@ function App() {
     </div>
   );
 }
-
-const backgroundStyle = {
-  backgroundImage: `url('/background.jpg')`,
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-  height: '100vh', // Full viewport height
-  width: '100vw', // Full viewport width
-};
 export default App;

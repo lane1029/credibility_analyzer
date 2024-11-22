@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+  }
+  
+  .app-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      url('../public/background.jpg') top center / cover no-repeat,
+      url('../public/background.jpg') bottom center / cover no-repeat;
+    z-index: -1;
+  }
+  
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: Transparency */
+    padding: 10px 20px;
+  }
+  
+  .content {
+    position: relative;
+    margin-top: 80px; /* Match header height */
+    height: calc(100vh - 80px); /* Leave space for header */
+    overflow-y: auto;
+    padding: 20px;
+  }
+  
