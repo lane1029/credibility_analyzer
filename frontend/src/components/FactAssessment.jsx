@@ -4,7 +4,7 @@ function FactAssessment({ facts }) {
   const [selectedFact, setSelectedFact] = useState({
     claim: "Select a claim to view details", 
     truth_value: "", 
-    confidence_score: 0, 
+    confidence_score: "", 
     facts: "",
     sources: []
   });
@@ -23,10 +23,10 @@ function FactAssessment({ facts }) {
 
   return (
     <div>
-      <h4>Select a Claim:</h4>
+      <h4 style={{ fontFamily: 'Shippori Antique B1, sans-serif' }}>Select a Claim:</h4>
       {/* Dropdown for selecting a fact */}
       <select
-        style={dropdownStyle}
+        style={{ ...dropdownStyle, fontFamily: 'Shippori Antique B1, sans-serif' }}
         onChange={(e) => {
           const factIndex = e.target.value;
           if (factIndex !== "") {
@@ -80,7 +80,8 @@ const factDetailStyle = {
   padding: '10px',
   border: '1px solid #ccc',
   borderRadius: '5px',
-  backgroundColor: '#f9f9f9',
+  backgroundColor: '#fafafa',
+  fontFamily: 'Shippori Antique B1, sans-serif',
 };
 
 export default FactAssessment;
