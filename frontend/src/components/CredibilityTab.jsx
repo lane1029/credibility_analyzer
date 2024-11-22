@@ -27,7 +27,8 @@ const credibilityEvaluationStyle = {
   padding: '10px',
   border: '1px solid #ccc',
   borderRadius: '5px',
-  backgroundColor: '#f1f9ff',
+  backgroundColor: '#fafafa',
+  fontFamily: 'Shippori Antique B1, sans-serif',
 };
 
 export default CredibilityTab;
