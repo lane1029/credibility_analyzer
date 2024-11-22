@@ -25,15 +25,15 @@ body {
     top: 0;
     width: 100%;
     z-index: 10;
-    background-color: rgba(255, 255, 255, 0.8); /* Optional: Transparency */
+    /* background-color: rgba(255, 255, 255, 0.8); Optional: Transparency */
     padding: 10px 20px;
   }
   
   .content {
     position: relative;
-    margin-top: 80px; /* Match header height */
-    height: calc(100vh - 80px); /* Leave space for header */
-    overflow-y: auto;
+    margin-top: 130px; /* Match the header height */
+    height: calc(100vh - 130px); /* Adjust height to exclude the header */
+    overflow-y: auto; /* Enable scrolling for content */
     padding: 20px;
   }
   

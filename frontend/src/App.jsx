@@ -10,11 +10,14 @@ function App() {
     <div className="app-container">
       <div className="background"></div>
       <Router>
-        <Header /> {/* Common header displayed on all pages */}
-        <Routes>
-          <Route path="/" element={<MainPage />} /> {/* Main page */}
-          <Route path="/second" element={<LearnMorePage />} /> {/* Second page */}
-        </Routes>
+        <header className="header"> <Header /></header>
+        {/* <Header /> Common header displayed on all pages */}
+        <main className="content">
+          <Routes>
+            <Route path="/" element={<MainPage />} /> {/* Main page */}
+            <Route path="/second" element={<LearnMorePage />} /> {/* Second page */}
+          </Routes>
+        </main>
       </Router>
     </div>
   );
