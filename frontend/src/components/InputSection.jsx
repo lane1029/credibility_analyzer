@@ -35,7 +35,7 @@ const buttonStyle = {
   fontSize: '1rem',
   borderRadius: '5px',
   border: 'none',
-  backgroundColor: '#656c74',
+  backgroundColor: '#6b7983',
   color: '#e6e5de',
   cursor: 'pointer',
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // Add glow effect
