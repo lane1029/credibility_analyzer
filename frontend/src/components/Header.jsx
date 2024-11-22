@@ -14,7 +14,7 @@ const headerStyle = {
   justifyContent: 'center', // Horizontally centers the content
   height: 'Auto',
   background: 'linear-gradient(to bottom, rgba(201, 199, 186, 1), rgba(201, 199, 186, 0))', // Gradient from opaque to transparent
-  color: '#53585c',
+  color: '#5F6D78',
   fontFamily: 'Kalam, sans-serif',
 };
 
@@ -23,5 +23,7 @@ const headerTextStyle = {
   lineHeight: 1, // Minimizes vertical space between lines (if multiline text)
   fontSize: '6rem',
   fontWeight: 'bold',
+  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Adds shadow behind the letters
 };
+
 export default Header;

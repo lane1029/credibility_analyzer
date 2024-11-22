@@ -79,11 +79,13 @@ function App() {
       <div style={appContainerStyle}>
         <Header />
         <div style={mainContentStyle}>
-          <InputSection
-            userInput={userInput}
-            setUserInput={setUserInput}
-            handleFetchPreview={handleFetchPreview}
-          />
+          <div style={inputSectionContainerStyle}>
+            <InputSection
+              userInput={userInput}
+              setUserInput={setUserInput}
+              handleFetchPreview={handleFetchPreview}
+            />
+          </div>
           {/* Running Analysis Message */}
           {loadingAnalysis && (
             <div style={runningMessageStyle}>
@@ -134,6 +136,17 @@ const mainContentStyle = {
   gap: '20px', // Space between input and row layout
 };
 
+const inputSectionContainerStyle = {
+  width: '70%',
+  // maxWidth: '800px', // Optional: limit the maximum width
+  // minWidth: '300px', // Optional: ensure a minimum width
+  margin: '0 auto',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '10px',
+};
+
 const runningMessageStyle = {
   fontSize: '1.2rem',
   color: '#606970',
@@ -152,7 +165,6 @@ const rowLayoutStyle = {
   padding: '0 60px', // Adds padding on both sides (left and right)
   boxSizing: 'border-box', // Ensures padding is included in the element's total width
 };
-
 
 const previewSectionWrapperStyle = {
   flex: 2, // Takes 1 portion of the available space
