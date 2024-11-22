@@ -8,8 +8,8 @@ function Header() {
     <header style={headerStyle}>
       <h1 style={headerTextStyle}>V E R A C I T Y</h1>
       <nav style={navStyle}>
-        <Link to="/" style={location.pathname === '/' ? activeLinkStyle : linkStyle}>Home</Link>
-        <Link to="/second" style={location.pathname === '/second' ? activeLinkStyle : linkStyle}>Second Page</Link>
+        <Link to="/" style={location.pathname === '/' ? activeLinkStyle : linkStyle}>Run Analysis</Link>
+        <Link to="/second" style={location.pathname === '/second' ? activeLinkStyle : linkStyle}>Learn More</Link>
       </nav>
     </header>
   );
