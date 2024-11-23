@@ -1,3 +1,5 @@
+// Desc: BiasTab component displays the bias evaluation and confidence score, as well as the evidence used to determine the bias.
+
 import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info'; // Material-UI Info Icon
@@ -6,6 +8,7 @@ function BiasTab({ bias }) {
   if (!bias) {
     return <p>No bias data available.</p>;
   }
+  // Parse the bias data if it is a string
   const parsedBias = typeof bias === 'string' ? JSON.parse(bias) : bias;
 
   return (
@@ -40,6 +43,7 @@ function BiasTab({ bias }) {
   );
 }
 
+// Inline Styles
 const biasTabStyle = {
   display: 'flex',
   flexDirection: 'column',
