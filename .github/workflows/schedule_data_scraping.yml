@@ -1,3 +1,7 @@
+## This workflow is triggered by a schedule event that runs every day at midnight UTC.
+## It runs the data scraping script and updates the vector store.
+## The script requires the MONGODB_URI and OPENAI_API_KEY environment variables to be set.
+
 name: Scheduled Web Scraping
 
 on:
@@ -9,7 +13,7 @@ jobs:
   scrape_job:
     runs-on: ubuntu-latest  # Use a Linux runner environment
 
-    env:
+    env: # Set the required environment variables
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
@@ -27,10 +31,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt  # Ensure you have a requirements.txt file
 
+      # Run the scraping script
       - name: Run scraping script
         run: |
           python backend/scripts/pull.py
           
+      # Run the vector store update script
       - name: Run vector store update script
         run: |
           python backend/scripts/update_vector_store.py
