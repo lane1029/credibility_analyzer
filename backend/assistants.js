@@ -1,8 +1,11 @@
+// Code to fetch the list of assistants from OpenAI API and retrieve the assistants
+
+// Load the environment variables
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Load the OpenAI client
 import { OpenAI } from 'openai';
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -38,6 +41,7 @@ async function retrieveAssistant(assistant_id) {
 export async function getAssistants(topic) {
 
   try {
+    // Fetch the list of assistants from OpenAI API
     const assistantList = await getAssistantList();
     // Select the assistant from the assistant list with the name containing the topic
     const topicAssistant = assistantList.find(assistant => assistant.name.toLowerCase().includes(topic));
