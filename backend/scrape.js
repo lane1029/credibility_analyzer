@@ -1,11 +1,14 @@
-// server.js
+// Description: This file contains the code for the POST endpoint that scrapes the content of a URL.
+
+// Import the required modules for scraping
 import * as cheerio from 'cheerio';
 import axios from 'axios';
 
-// POST endpoint for scraping the URL content
+// function to scrape the content of a URL
 export async function scrapeURL(url) {
     try {
         let response;
+        // Extract the HTML content of the URL
         try {
             response = await extractHTML(url);
         } catch (error) {
@@ -22,7 +25,7 @@ export async function scrapeURL(url) {
         const mainDiv = $('main');
         const mainContentDiv = $('main-content');
 
-
+        // Extract text content from the main content elements
         if (article.length) {
             textContent = await extractText($, article);
         } else if (mainDiv.length) {
@@ -35,6 +38,7 @@ export async function scrapeURL(url) {
             body.find('header, footer, nav, aside, form, script, style').remove();
             textContent = await extractText($, body);
         }
+        // Trim and clean up the text content
         const trimmedText = textContent.trim().replace(/\s+/g, ' ')
 
         return trimmedText;
@@ -44,6 +48,7 @@ export async function scrapeURL(url) {
     }
 };
 
+// Function to extract the HTML content of a URL
 async function extractHTML(url) {
     try {
         const response = await axios.get(url);
