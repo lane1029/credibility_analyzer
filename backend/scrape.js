@@ -20,18 +20,21 @@ export async function scrapeURL(url) {
         // Try to find content within the <article> tag or main <div> tag
         const article = $('article');
         const mainDiv = $('main');
+        const mainContentDiv = $('main-content');
+
 
         if (article.length) {
             textContent = await extractText($, article);
         } else if (mainDiv.length) {
             textContent = await extractText($, mainDiv);
+        } else if (mainContentDiv.length) {
+            textContent = await extractText($, mainContentDiv);
         } else {
             // Fall back to extracting content from body, excluding common non-content selectors
             const body = $('body').clone();
             body.find('header, footer, nav, aside, form, script, style').remove();
             textContent = await extractText($, body);
         }
-
         const trimmedText = textContent.trim().replace(/\s+/g, ' ')
 
         return trimmedText;
