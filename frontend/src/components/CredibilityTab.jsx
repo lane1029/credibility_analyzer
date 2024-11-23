@@ -1,3 +1,5 @@
+// Desc: CredibilityTab component displays the credibility evaluation and confidence score of the article.
+
 import React from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info'; // Material-UI Info Icon
@@ -6,10 +8,11 @@ function CredibilityTab({ credibility }) {
   if (!credibility) {
     return <p>No credibility analysis available.</p>;
   }
+  // Parse the credibility data if it is a string
   const parsedCredibility = typeof credibility === 'string' ? JSON.parse(credibility) : credibility;
   return (
     <div style={credibilityTabStyle}>
-      {/* Credibility Evaluation and Confidence Score Section */}
+      {/* Credibility Evaluation and Confidence Score tab */}
       <div style={credibilityEvaluationStyle}>
         {/* Tooltip Icon in Top Right */}
         <div style={tooltipIconWrapperStyle}>
@@ -20,6 +23,7 @@ function CredibilityTab({ credibility }) {
             <InfoIcon fontSize="small" style={tooltipIconStyle} />
           </Tooltip>
         </div>
+        {/* Credibility evaluation section */}
         <h3>Credibility Evaluation</h3>
         <p><strong>Score:</strong> {parsedCredibility.credibility_score}</p>
         <p><strong>Summary:</strong> {parsedCredibility.credibility_summary}</p>
@@ -28,6 +32,7 @@ function CredibilityTab({ credibility }) {
   );
 }
 
+// Inline Styles
 const credibilityTabStyle = {
   display: 'flex',
   flexDirection: 'column',
