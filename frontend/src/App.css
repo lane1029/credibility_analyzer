@@ -1,3 +1,5 @@
+/* GLobal styling */
+
 body {
     margin: 0;
   }
@@ -9,7 +11,7 @@ body {
   }
   
   .background {
-    position: fixed;
+    position: fixed; /* Fixed position to cover the entire screen */
     top: 0;
     left: 0;
     width: 100%;
@@ -21,11 +23,10 @@ body {
   }
   
   .header {
-    position: fixed;
+    position: fixed; /* Fixed position to stay on top */
     top: 0;
     width: 100%;
     z-index: 10;
-    /* background-color: rgba(255, 255, 255, 0.8); Optional: Transparency */
     padding: 10px 20px;
   }
   

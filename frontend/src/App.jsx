@@ -1,3 +1,7 @@
+// Component that contains the routing for the application. 
+//It uses the BrowserRouter and Routes components from react-router-dom to define the routes for the application. 
+//The MainPage and LearnMorePage components are rendered based on the route. The Header component is rendered on all pages.
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './components/MainPage'; // Your main page
