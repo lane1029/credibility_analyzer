@@ -1,4 +1,4 @@
-/* Dot Wave Animation */
+/* Dot Wave Animation for "Run Analysis" */
 .dot-wave span {
     display: inline-block;
     animation: wave 1.5s infinite;

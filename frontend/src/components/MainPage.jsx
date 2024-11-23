@@ -1,3 +1,6 @@
+// Code to render the main page of the application
+
+// Import necessary libraries
 import React, { useState } from 'react';
 import InputSection from './InputSection';
 import PreviewSection from './PreviewSection';
@@ -5,6 +8,7 @@ import TabsSection from './TabsSection';
 import './MainPage.css';
 
 function MainPage() {
+  // State variables - initialize with empty values
   const [userInput, setUserInput] = useState('');
   const [previewContent, setPreviewContent] = useState('');
   const [analysisResults, setAnalysisResults] = useState({
@@ -27,6 +31,7 @@ function MainPage() {
     setIsAnalysisRun(false);
 
     try {
+      // Fetch preview content
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/fetch-content`, {
         method: 'POST',
         headers: {
@@ -53,6 +58,7 @@ function MainPage() {
     setLoadingAnalysis(true);
 
     try {
+      // Run analysis on the fetched content
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -75,50 +81,52 @@ function MainPage() {
 
   return (
     <div style={appContainerStyle}>
-    <div style={mainContentStyle}>
-        <div style={inputSectionContainerStyle}>
-        <InputSection
-            userInput={userInput}
-            setUserInput={setUserInput}
-            handleFetchPreview={handleFetchPreview}
-        />
-        </div>
-        {/* Running Analysis Message */}
-        {loadingAnalysis && (
-        <div style={runningMessageStyle}>
-            Running Analysis<span className="dot-wave">
-            <span>.</span>
-            <span>.</span>
-            <span>.</span>
-            </span>
-        </div>
-        )}
-        {/* Conditionally Render Preview and Tabs */}
-        {isAnalysisRun && (
-        <div style={rowLayoutStyle}>
-            {/* Preview Section */}
-            <div style={previewSectionWrapperStyle}>
-            <PreviewSection
-                previewContent={previewContent}
-                loading={loadingPreview}
-            />
-            </div>
-            {/* Tabs Section */}
-            <div style={tabsSectionWrapperStyle}>
-            <TabsSection
-                credibilityResult={analysisResults.credibilityResult}
-                biasResult={analysisResults.biasResult}
-                factResult={analysisResults.factResult}
-                loading={loadingAnalysis}
-            />
-            </div>
-        </div>
-        )}
-    </div>
+      <div style={mainContentStyle}>
+          <div style={inputSectionContainerStyle}>
+          {/* Input Section */}
+          <InputSection
+              userInput={userInput}
+              setUserInput={setUserInput}
+              handleFetchPreview={handleFetchPreview}
+          />
+          </div>
+          {/* Running Analysis Message */}
+          {loadingAnalysis && (
+          <div style={runningMessageStyle}>
+              Running Analysis<span className="dot-wave">
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+              </span>
+          </div>
+          )}
+          {/* Conditionally Render Preview and Tabs */}
+          {isAnalysisRun && (
+          <div style={rowLayoutStyle}>
+              {/* Preview Section */}
+              <div style={previewSectionWrapperStyle}>
+              <PreviewSection
+                  previewContent={previewContent}
+                  loading={loadingPreview}
+              />
+              </div>
+              {/* Tabs Section */}
+              <div style={tabsSectionWrapperStyle}>
+              <TabsSection
+                  credibilityResult={analysisResults.credibilityResult}
+                  biasResult={analysisResults.biasResult}
+                  factResult={analysisResults.factResult}
+                  loading={loadingAnalysis}
+              />
+              </div>
+          </div>
+          )}
+      </div>
     </div>
   );
 }
 
+// CSS styles
 const appContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -162,12 +170,12 @@ const rowLayoutStyle = {
 };
 
 const previewSectionWrapperStyle = {
-  flex: 2, // Takes 1 portion of the available space
+  flex: 2, // Takes 2 portions of the available space
   display: 'flex',
 };
 
 const tabsSectionWrapperStyle = {
-  flex: 3, // Takes 2 portions of the available space
+  flex: 3, // Takes 3 portions of the available space
   display: 'flex',
 };
 

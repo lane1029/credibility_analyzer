@@ -1,3 +1,6 @@
+// Desc: TabsSection component to display the credibility, bias, and fact results in tabs
+
+// import packages
 import React, { useState } from 'react';
 import FactAssessment from './FactAssessment';
 import BiasTab from './BiasTab';
@@ -10,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
-  const [activeTab, setActiveTab] = useState(0); // Use index-based tabs for MUI
+  const [activeTab, setActiveTab] = useState(0); // Use index-based tabs for MUI - initialize to 0
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -82,13 +85,14 @@ function TabsSection({ credibilityResult, biasResult, factResult, loading }) {
   );
 }
 
+// Custom theme for the tabs - colors
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#b77b82', // Replace with your desired primary color
+      main: '#b77b82', 
     },
     secondary: {
-      main: '#b77b82', // Replace with your desired secondary color
+      main: '#b77b82',
     },
   },
 });

@@ -95,10 +95,10 @@ function LearningTabs() {
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#b77b82', // Replace with your desired primary color
+      main: '#b77b82', 
     },
     secondary: {
-      main: '#b77b82', // Replace with your desired secondary color
+      main: '#b77b82', 
     },
   },
 });

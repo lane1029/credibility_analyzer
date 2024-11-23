@@ -1,3 +1,5 @@
+// Desc: This component is used to display the preview of the markdown content.
+
 import React from 'react';
 import Box from '@mui/material/Box';
 
@@ -5,8 +7,10 @@ function PreviewSection({ previewContent, loading }) {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={headerSectionStyle}>
+        {/* Header block for preview section */}
         <h3 style={headerStyle}>P R E V I E W</h3>
       </Box>
+      {/* content block */}
       <Box sx={contentSectionStyle}>
         <Box sx={contentStyle}>
           <p>{previewContent}</p>
@@ -16,6 +20,8 @@ function PreviewSection({ previewContent, loading }) {
   );
 }
 
+
+// Styles
 const headerSectionStyle = {
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
   padding: '20px', 
