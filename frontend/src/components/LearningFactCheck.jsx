@@ -1,8 +1,11 @@
+// Fact check tab on learning page
+
 import React from 'react';
 
 function LearningFactCheck() {
     return (
         <div style={learningFactsTabStyle}>
+            {/* content for tab */}
             <div style={learningFactsStyle}>
                 <h3>How is bias determined?</h3>
                 <p>
@@ -32,6 +35,7 @@ function LearningFactCheck() {
     );
 }
 
+// Styles
 const learningFactsTabStyle = {
     display: 'flex',
     flexDirection: 'column',

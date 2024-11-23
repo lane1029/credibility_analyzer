@@ -1,3 +1,6 @@
+// Desc: LearningTabs component to display the tabs for Misinformation, Credibility, Bias, and Fact Check
+
+// Import necessary libraries
 import React, { useState } from 'react';
 import LearningMisinformation from './LearningMisinformation';
 import LearningCredibility from './LearningCredibility';
@@ -11,8 +14,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 function LearningTabs() {
+  // Use index-based tabs for MUI set current state to the first tab
   const [activeTab, setActiveTab] = useState(0); // Use index-based tabs for MUI
 
+  // Handle tab change
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
@@ -86,6 +91,7 @@ function LearningTabs() {
   );
 }
 
+// Theme for the tabs - handles colors
 const theme = createTheme({
   palette: {
     primary: {

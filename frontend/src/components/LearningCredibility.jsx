@@ -1,8 +1,11 @@
+// Desc: Learning tab for the credibility assessment feature
+
 import React from 'react';
 
 function LearningCredibility() {
     return (
         <div style={learningCredTabStyle}>
+            {/* content for the credibility learning tab */}
             <div style={credStyle}>
                 <h3>How is credibility assessed?</h3>
                 <p>
@@ -50,6 +53,8 @@ function LearningCredibility() {
     );
 }
 
+
+// Styles
 const learningCredTabStyle = {
     display: 'flex',
     flexDirection: 'column',

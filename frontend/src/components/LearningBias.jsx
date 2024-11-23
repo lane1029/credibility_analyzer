@@ -1,8 +1,11 @@
+// Desc: Bias learning tab content
+
 import React from 'react';
 
 function LearningBias() {
     return (
         <div style={learningBiasTabStyle}>
+            {/* Content for the bias explanation */}
             <div style={learningBiasStyle}>
                 <h3>How is bias determined?</h3>
                 <p>
@@ -29,6 +32,7 @@ function LearningBias() {
     );
 }
 
+// Styles for the Bias Learning Tab
 const learningBiasTabStyle = {
     display: 'flex',
     flexDirection: 'column',

@@ -1,8 +1,11 @@
+// Desc: Misinformation tab content
+
 import React from 'react';
 
 function LearningMisinformation() {
     return (
         <div style={misinformationTabStyle}>
+            {/* content for tab */}
             <div style={misinformationStyle}>
                 <h3>What is misinformation</h3>
                 <p>
@@ -28,6 +31,7 @@ function LearningMisinformation() {
     );
 }
 
+// Styles
 const misinformationTabStyle = {
     display: 'flex',
     flexDirection: 'column',

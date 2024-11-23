@@ -1,8 +1,11 @@
+// Desc: Input section component for the main page
+
 import React from 'react';
 
 function InputSection({ userInput, setUserInput, handleFetchPreview }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row-reverse' }}>
+      {/* retrieved input from the text box and starts the preview and analysts */}
       <button onClick={handleFetchPreview} style={buttonStyle}>
         Run Analysis
       </button>
@@ -17,6 +20,7 @@ function InputSection({ userInput, setUserInput, handleFetchPreview }) {
   );
 }
 
+// Styles
 const inputStyle = {
   width: '500px', // Full width of the parent container
   padding: '10px', // Padding inside the input box

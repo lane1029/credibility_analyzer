@@ -1,3 +1,5 @@
+// Main code for the Learn More page
+
 import React from 'react';
 import LearningTabs from './LearningTabs';
 
