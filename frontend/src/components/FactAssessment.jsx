@@ -1,8 +1,12 @@
+// Description: A component that displays a dropdown of fact claims and their details.
+
 import React, { useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info'; // Material-UI Info Icon
 
+// parses the facts and displays them in a dropdown
 function FactAssessment({ facts }) {
+  // State to store the selected fact
   const [selectedFact, setSelectedFact] = useState({
     claim: "Select a claim to view details", 
     truth_value: "", 
@@ -13,12 +17,14 @@ function FactAssessment({ facts }) {
 
   let parsedFacts = [];
 
+  // Parse the facts if it is a string
   try {
     parsedFacts = typeof facts === 'string' ? JSON.parse(facts) : facts;
   } catch (error) {
     console.error('Failed to parse facts:', error);
   }
 
+  // If the facts are not an array, return a message
   if (!Array.isArray(parsedFacts)) {
     return <p>No facts available.</p>;
   }
@@ -56,7 +62,8 @@ function FactAssessment({ facts }) {
           </option>
         ))}
       </select>
-
+      
+      {/* Fact display section */}
       {selectedFact && (
         <div style={factDetailStyle}>
           <h4>Fact Details</h4>
@@ -80,6 +87,8 @@ function FactAssessment({ facts }) {
   );
 }
 
+
+// Inline styles
 const factAssessmentStyle = {
   position: 'relative', // Required for positioning the tooltip icon
   padding: '10px',
