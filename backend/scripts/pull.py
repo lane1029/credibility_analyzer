@@ -1,3 +1,6 @@
+## This script is used to pull data from a website and update the database with the new data
+
+# Import the required libraries
 import re
 from datetime import datetime
 
@@ -7,11 +10,13 @@ from bs4 import BeautifulSoup # Used to parse HTML content
 import urllib.request # Used to fetch URLs
 from config import get_config # Used to get the configuration
 import json # Used to work with JSON data
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+from pymongo.mongo_client import MongoClient # Used to interact with MongoDB
+from pymongo.server_api import ServerApi # Used to specify the server API version
 
+# Get the configuration/envionrment variables
 config = get_config()
 
+# Connect to the MongoDB client
 client = MongoClient(config.MONGO_URI, server_api=ServerApi('1'))
 
 def fetch_html(url):
@@ -31,9 +36,11 @@ def fetch_html(url):
         # Check if the page exists
         code = urllib.request.urlopen(request).getcode()
         
+        # Return the HTML content if the page exists
         response = urllib.request.urlopen(request).read()
         data = response.decode('utf-8')
         return code, data
+    
     # return an error if the URL is invalid or the page is not found
     except Exception as e:
         sys.stderr.write(f"Error fetching HTML content: {e}")
@@ -186,6 +193,7 @@ def check_existing_articles(db, main_url):
         common_titles: A list of titles that are already in the database
         new_titles: A list of titles that are not in the database
     """    
+    # Get the existing articles from the database
     existing_db_articles = db.articles.find({}, {"article_id": 1, "published_date": 1}).sort("published_date", -1)
     existing_article_dict = {article["article_id"]: article["published_date"] for article in existing_db_articles}
 
@@ -213,6 +221,8 @@ def updated_articles(collection, common_titles, existing_article_dict, base_url)
     """
     updated_article_count = 0
     updated_articles = []
+
+    # Loop through the common titles and update the articles if needed
     for title in common_titles:
         db_publish_date = existing_article_dict[title]
         article_url = base_url + title
@@ -260,6 +270,7 @@ def add_articles(collection, new_titles, base_url, content_type):
         base_url (str): The base URL of the website
         content_type (str): The type of content
     """
+    # Loop through the new titles and add the articles to the database
     for link in new_titles:
         article_url = base_url + link
         code, article_html = fetch_html(article_url)
@@ -297,7 +308,10 @@ def fetch_and_update_data(main_url):
         bool: True if successful, False otherwise
     """
     try:
+        # Connect to the MongoDB client
         db = client[config.DB_NAME]
+
+        # Get the collection for the articles and check for existing articles
         collection = get_article_collection(config.ARTICLE_COLLECTION_NAME, db)
         existing_article_dict, common_titles, new_titles = check_existing_articles(db, main_url)
 
@@ -318,6 +332,14 @@ def fetch_and_update_data(main_url):
         return False, [], 0, [], 0
 
 def get_metadata_collection(collection_name, db):
+    """
+    Get the metadata collection from the database
+    Args:
+        collection_name (str): The name of the collection
+        db (MongoClient): The MongoDB client
+    Returns:
+        collection (Collection): The metadata collection
+    """
     # Check if a specific collection exists in the database
     if collection_name in db.list_collection_names():
         collection = db[collection_name]
@@ -327,6 +349,15 @@ def get_metadata_collection(collection_name, db):
     return collection
 
 def update_metadata(fetch_successful, updated_titles, num_updated, new_titles, num_added):
+    """
+    Updates the metadata collection with the latest information
+    Args:
+        fetch_successful (bool): Whether the fetch was successful
+        updated_titles (list): A list of updated titles
+        num_updated (int): The number of updated titles
+        new_titles (list): A list of new titles
+        num_added (int): The number of new titles
+    """
     db = client[config.DB_NAME]
     metadata_collection = get_metadata_collection(config.METADATA_COLLECTION_NAME, db)
 
