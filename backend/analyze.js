@@ -1,11 +1,13 @@
+// Description: Utility functions to analyze text for bias using OpenAI's GPT-3 API.
+
+// Load environment variables
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Load MongoDB and OpenAI clients
 import { MongoClient } from 'mongodb';
 import { OpenAI } from 'openai';
-
 const client = new MongoClient(process.env.MONGODB_URI);
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -16,6 +18,8 @@ export async function isUrlOrText(input) {
   return urlPattern.test(input) ? 'URL' : 'Text';
 };
 
+// Function to call OpenAI's assistant API to analyze text for bias or for factuality
+// assistant parameter determines which assistant to use
 export async function analyze(text, Assistant) {
   try{
     const thread = await createThread()
@@ -58,6 +62,7 @@ async function createThread() {
   }
 }
 
+// Function to create a run
 async function createRun(thread, assistant) {
   try {
     let run = await openai.beta.threads.runs.createAndPoll(
@@ -73,6 +78,7 @@ async function createRun(thread, assistant) {
   }
 }
 
+// Function to get the assistant's response
 async function getAssistantResponse(run) {
   try {
     if (run.status === 'completed') {
@@ -93,6 +99,7 @@ async function getAssistantResponse(run) {
   }
 }
 
+// Function to clean the assistant's response - remove code blocks and 'json' prefix
 async function cleanResponse(response) {
   let cleanedResponse = response.split('```')[1]?.trim() || response;
   cleanedResponse = cleanedResponse.replace(/^json\s*/, '');
