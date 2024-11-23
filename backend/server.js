@@ -1,22 +1,27 @@
+// Code for the server that handles the API requests
+
+// Import the necessary modules
 import dotenv from 'dotenv';
-import express, { json } from 'express';
+import express from 'express';
 import cors from 'cors';
 import { isUrlOrText, analyze } from './analyze.js';
 import { getAssistants } from './assistants.js';
 import { scrapeURL } from './scrape.js';
 import {classifyText} from './classify.js';
 import {summarizeCredibilityAnalysis} from './credibility.js';
-import e from 'express';
 // Load environment variables
 dotenv.config();
 
+// Create an Express app
 const app = express();
 
+// Enable CORS
 app.use(cors({
   origin: true, // Reflects the request origin automatically
   credentials: true, // Allows cookies and credentials
 }));
 
+// access controls
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*"); // Allows all origins (or specify specific one if needed)
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
@@ -25,6 +30,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 
+// POST to get the text content from a URL
 app.post('/api/fetch-content', async (req, res) => {
   const { userInput } = req.body;
   if (!userInput) {
@@ -33,10 +39,12 @@ app.post('/api/fetch-content', async (req, res) => {
 
   try {
     const inputType = await isUrlOrText(userInput);
+    // Scrape the URL if the input is a URL
     if (inputType === 'URL') {
       const textContent = await scrapeURL(userInput);
       res.json({ content: textContent });
     }
+    // Return the text content if the input is text
     else {
       res.json({ content: userInput });
     }
@@ -46,9 +54,11 @@ app.post('/api/fetch-content', async (req, res) => {
   }
 });
 
+// POST to analyze the text content
 app.post('/api/analyze', async (req, res) => {
   const { textContent } = req.body;
   try {
+    // Run all the analysis functions
     const classification = await classifyText(textContent);
     const assistants = await getAssistants(classification);
     const biasAnalysis = await analyze(textContent, assistants[1]);
