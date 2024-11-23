@@ -1,15 +1,19 @@
+// Description: This file contains the code to classify text using OpenAI's ChatGPT API.
+
+// Load environment variables
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Load the OpenAI client
 import { OpenAI } from 'openai';
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// List of possible labels for classification
 const LABELS = ['health', 'other'];
 
-// Endpoint to classify text
+// function to classify text
 export async function classifyText(text) {
 
     try {
