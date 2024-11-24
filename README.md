@@ -13,6 +13,8 @@ The intent of each analysis is to empower the user to think critically about the
 
 The prototype version of this app focuses on health data; however, there is the potential to expand to other categories.
 
+[![Video Overview](images/youtube_image.png)](https://youtu.be/b6_-WPEwvVE)
+
 ## Technology Stack
 The following tools were used to develop this application.
 
